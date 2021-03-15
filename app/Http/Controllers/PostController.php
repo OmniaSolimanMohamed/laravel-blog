@@ -13,9 +13,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        $dateCarboon = Carbon::parse($posts['cerated_at']);
-        
-        $time_format = $dateCarboon->isoFormat('MMMM Do YYYY, h:mm:ss a');
+       
         // dd($posts);
         // $posts = [
         //     ['id' => 1, 'title' => 'First User','email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'],
@@ -24,18 +22,22 @@ class PostController extends Controller
 
         return view('posts.index', [
             'posts' => $posts,
-            'time_format' => $time_format
+           
         ]);
     }
 
     public function show($post)
     {
         $post = Post::find($post);
+        $dateCarboon = Carbon::parse($post['created_at'],'UTC');
+        
+        $time_format = $dateCarboon->isoFormat('MMMM Do YYYY, h:mm:ss a');
         // $post =['id' => 1, 'title' => 'First User', 'email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'];
 
 
         return view('posts.show', [
-            'post' => $post
+            'post' => $post,
+            'time_format' => $time_format
         ]);
     }
 

@@ -20,6 +20,7 @@
     <blockquote class="blockquote mb-0">
         <b class="card-title">Title: </b> <span>{{$post['title']}}</span> <br>
     <b class="card-title">Description: </b> <p>{{$post['description']}}</p>
+    <b class="card-title">Description: </b> <p>{{$time_format}}</p>
     
       <!-- <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer> -->
     </blockquote>
