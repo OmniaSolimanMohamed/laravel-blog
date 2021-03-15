@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Post;
 use App\User;
 use Carbon\Carbon;
@@ -55,15 +56,15 @@ class PostController extends Controller
         // return view('posts.create');
     }
     
-    public function store(Request $request)
+    public function store(StorePostRequest  $request)
     {
         //logic for saving in db
          $data = request()->all();
         //  dd($data);
 //Validation
         $validated = $request->validate([
-            'title' => 'required|min:3',
-            'description' => 'required',
+            'title' => 'unique:posts'
+            
         ]);
 
          //Insert Into Database
@@ -88,7 +89,7 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
-    public function update($post,Request $request)
+    public function update($post,StorePostRequest $request)
     {
         $title = $request->get('title');
         $description = $request->get('description');
