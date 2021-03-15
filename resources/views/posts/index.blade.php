@@ -28,8 +28,9 @@
         <a onclick="return confirm ('are you sure?')" href="{{ route('posts.destroy', [ 'post' => $post['id'] ]) }}" class="btn btn-danger">Delete</a>
       </td>
     </tr>
+    
     @endforeach
   </tbody>
 </table>
-
+{{ $posts->links() }}
 @endsection

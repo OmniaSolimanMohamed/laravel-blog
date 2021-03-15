@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-       
+        $pages =Post::paginate(3);
         // dd($posts);
         // $posts = [
         //     ['id' => 1, 'title' => 'First User','email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'],
@@ -22,6 +22,7 @@ class PostController extends Controller
 
         return view('posts.index', [
             'posts' => $posts,
+            'posts' => $pages
            
         ]);
     }
