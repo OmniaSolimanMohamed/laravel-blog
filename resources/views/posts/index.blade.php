@@ -13,19 +13,22 @@
     </tr>
   </thead>
   <tbody>
-  @foreach($posts as $post)
-          <tr>
-            <th scope="row">{{$post->id}}</th>
-            <td>{{$post->title}}</td>
-            <td>{{$post->user ? $post->user->name : 'not found'}}</td>
-            <td>{{$post->created_at}}</td>
-            <td class="col">
-                <a href="{{ route('posts.show', [ 'post' => $post['id'] ]) }}" class="btn btn-info">View</a>
-                <a href="{{ route('posts.edit', [ 'post' => $post['id'] ]) }}" class="btn btn-primary">Edit</a>
-                <a href="#" class="btn btn-danger">Delete</a>
-            </td>
-          </tr>
-          @endforeach
+
+    @foreach($posts as $post)
+    <tr>
+      <th scope="row">{{$post->id}}</th>
+      <td>{{$post->title}}</td>
+      <td>{{$post->user ? $post->user->name : 'not found'}}</td>
+      <td>{{$post->created_at}}</td>
+      <td class="col">
+        <a href="{{ route('posts.show', [ 'post' => $post['id'] ]) }}" class="btn btn-info">View</a>
+        <a href="{{ route('posts.edit', [ 'post' => $post['id'] ]) }}" class="btn btn-primary">Edit</a>
+
+
+        <a onclick="return confirm ('are you sure?')" href="{{ route('posts.destroy', [ 'post' => $post['id'] ]) }}" class="btn btn-danger">Delete</a>
+      </td>
+    </tr>
+    @endforeach
   </tbody>
 </table>
 

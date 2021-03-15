@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,6 +13,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        $dateCarboon = Carbon::parse($posts['cerated_at']);
+        
+        $time_format = $dateCarboon->isoFormat('MMMM Do YYYY, h:mm:ss a');
         // dd($posts);
         // $posts = [
         //     ['id' => 1, 'title' => 'First User','email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'],
@@ -20,6 +24,7 @@ class PostController extends Controller
 
         return view('posts.index', [
             'posts' => $posts,
+            'time_format' => $time_format
         ]);
     }
 
@@ -87,8 +92,8 @@ class PostController extends Controller
         $user_id = $request->get('user_id');
 
         //logic for saving in db
-        $input = Post::get('title');   
-        $data = request()->all();
+        // $input = Post::get('title');   
+        // $data = request()->all();
         $post = Post::find($post);
         $post->title = $title;
         $post->description = $description;
@@ -99,8 +104,38 @@ class PostController extends Controller
 
     }
 
+//Delete
+    public function destroy($post)
+    {
+        // dd($post);
+        // return redirect()->route('posts.destroy');
 
+        
+        // $post = Post::find($post);
+        // return view('posts.destroy', [
+            
+        //     'post' => $post
+        // ]);
 
+        // $title = $request->get('title');
+        // $description = $request->get('description');
+        // $user_id = $request->get('user_id');
+
+        Post::destroy($post);
+        return redirect()->route('posts.index');
+
+        // $post->title = $title;
+        // $post->description = $description;
+        // $post->user_id = $user_id;
+        // dd($post);
+        // $post->delete();
+        // return view('posts.destroy', [
+            
+        //     'post' => $post
+        // ]);
+        // return redirect()->route('posts.destroy');
+
+    }
 
 }
 
