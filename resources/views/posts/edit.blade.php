@@ -1,21 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="POST" action="{{route('posts.store')}}">
-    @csrf
+<form method="POST" action="{{route('posts.update',$post['id'])}}">
+  @method('PUT')
+  @csrf
+
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title" value="{{$post['title']}}">
+      
+      <input type="text" class="form-control" id="title"  name="title" value="{{$post['title']}}">
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <textarea class="form-control"> {{$post['description']}} </textarea>
+      <textarea class="form-control" name="description"> {{$post['description']}}</textarea>
     </div>
     <div class="mb-3">
-      <label for="title" class="form-label">Post Creator</label>
-      <input type="text" class="form-control" id="title" value="{{$post['posted_by']}}">
+      <label for="post_creator" class="form-label">Post Creator</label>
+      <select class="form-control" name="user_id">
+      @foreach($users as $user)
+          <option value="{{$user->id}}">{{$user->name}}</option>
+        @endforeach
+      </select>
     </div>
-    <!-- <label>{{$post['title']}}</label> -->
     <button type="submit" class="btn btn-success">Update</button>
   </form>
 

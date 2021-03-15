@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -9,10 +11,12 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = [
-            ['id' => 1, 'title' => 'First User','email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'],
-            ['id' => 2, 'title' => 'Second User','email' => 'mony@gmail.com', 'description' => 'This Is  Second description', 'posted_by' => 'Mony', 'created_at' => '2019-09-01'],
-        ];
+        $posts = Post::all();
+        // dd($posts);
+        // $posts = [
+        //     ['id' => 1, 'title' => 'First User','email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'],
+        //     ['id' => 2, 'title' => 'Second User','email' => 'mony@gmail.com', 'description' => 'This Is  Second description', 'posted_by' => 'Mony', 'created_at' => '2019-09-01'],
+        // ];
 
         return view('posts.index', [
             'posts' => $posts,
@@ -21,7 +25,8 @@ class PostController extends Controller
 
     public function show($post)
     {
-        $post =['id' => 1, 'title' => 'First User', 'email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'];
+        $post = Post::find($post);
+        // $post =['id' => 1, 'title' => 'First User', 'email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'];
 
 
         return view('posts.show', [
@@ -33,18 +38,32 @@ class PostController extends Controller
  // Create and Store
     public function create()
     {
-        $post =['id' => 1, 'title' => 'First User', 'email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'];
+        
+        // $post =['id' => 1, 'title' => 'First User', 'email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'];
 
         return view('posts.create', [
-            'post' => $post
+            'users' => User::all()
         ]);
         // return view('posts.create');
     }
     
-    public function store()
+    public function store(Request $request)
     {
         //logic for saving in db
+         $data = request()->all();
+        //  dd($data);
+//Validation
+        $validated = $request->validate([
+            'title' => 'required|min:3',
+            'description' => 'required',
+        ]);
 
+         //Insert Into Database
+        //  Post::create([
+        //      'title' => $data['title'],
+        //      'description' => $data['description'],
+        //  ]);
+        Post::create($data);
         return redirect()->route('posts.index');
     }
 
@@ -52,19 +71,32 @@ class PostController extends Controller
 
 
 // Edit and Update
-    public function edit()
+    public function edit($post)
     {
-        $post =['id' => 1, 'title' => 'First User', 'email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'];
-
+        // $post =['id' => 1, 'title' => 'First User', 'email' => 'Omnia@gmail.com', 'description' => 'This Is First description', 'posted_by' => 'Omnia', 'created_at' => '2000-01-01'];
+        $post = Post::find($post);
         return view('posts.edit', [
+            'users' => User::all(),
             'post' => $post
         ]);
     }
-    public function update()
+    public function update($post,Request $request)
     {
+        $title = $request->get('title');
+        $description = $request->get('description');
+        $user_id = $request->get('user_id');
+
         //logic for saving in db
+        $input = Post::get('title');   
+        $data = request()->all();
+        $post = Post::find($post);
+        $post->title = $title;
+        $post->description = $description;
+        $post->user_id = $user_id;
+        $post->save();
 
         return redirect()->route('posts.index');
+
     }
 
 
