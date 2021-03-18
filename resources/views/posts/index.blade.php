@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <a href="{{ route('posts.create') }}" class="btn btn-success d-grid gap-2 col-1 mx-auto">Create Post</a>
 <table class="table mt-3">
   <thead>

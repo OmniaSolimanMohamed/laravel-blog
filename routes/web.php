@@ -17,8 +17,11 @@ use App\Http\Controllers\PostController; //== require('TestController')
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/create',[PostController::class,'create'])->name('posts.create');
 Route::post('posts',[PostController::class,'store'])->name('posts.store');
 Route::get('/posts/{post}/edit',[PostController::class, 'edit'])->name('posts.edit');
@@ -28,3 +31,6 @@ Route::delete('/posts/{post}',[PostController::class, 'destroy'])->name('posts.d
 
 
 // PUT/PATCH	/photos/{photo}	update	photos.update
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
