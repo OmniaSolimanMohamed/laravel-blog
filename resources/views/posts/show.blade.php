@@ -35,8 +35,9 @@
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0 ">
-        <b class="card-title">NAme: </b> <span>{{$post['posted_by']}}</span> <br>
-        <b class="card-title">Email: </b> <span>{{$post['email']}}</span> <br>
+        <b class="card-title">Name: </b> <span>{{$post->user ? $post->user->name : 'not found'}}</span> <br>
+        <b class="card-title">Email: </b> <span>{{$post->user ? $post->user->email : 'not found'}}</span> <br>
+
         <b class="card-title">Created at: </b> <span>{{$post['created_at']}}</span> <br>
     
       <!-- <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer> -->

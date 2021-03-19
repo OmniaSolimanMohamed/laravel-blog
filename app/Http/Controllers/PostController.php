@@ -31,6 +31,7 @@ class PostController extends Controller
     public function show($post)
     {
         $post = Post::find($post);
+        $users = User::all();
         $dateCarboon = Carbon::parse($post['created_at'],'UTC');
         
         $time_format = $dateCarboon->isoFormat('MMMM Do YYYY, h:mm:ss a');
@@ -39,6 +40,7 @@ class PostController extends Controller
 
         return view('posts.show', [
             'post' => $post,
+            'users' => $users,
             'time_format' => $time_format
         ]);
     }
