@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController; //== require('TestController')
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,23 @@ Route::delete('/posts/{post}',[PostController::class, 'destroy'])->name('posts.d
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+//Socialite
+
+Route::get('/auth/redirect', function () {
+    // dd("git");
+    return Socialite::driver('github')->redirect();
+});
+
+//accepting github response
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('github')->user();
+    dd($user);
+    //new user or existent user in DB
+
+    // request to github aPI
+
+});
