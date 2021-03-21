@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
 use App\Post;
 use Illuminate\Http\Request;
@@ -24,4 +25,21 @@ class PostController extends Controller
         $post = Post::find($post);
         return new PostResource($post);
     }
+
+
+    public function store(StorePostRequest $request)
+    {
+  
+         $data = request()->all();
+
+        $validated = $request->validate([
+            'title' => 'unique:posts'
+            
+        ]);
+
+       
+        // Post::create($data);
+        return new PostResource($data);
+    }
+
 }

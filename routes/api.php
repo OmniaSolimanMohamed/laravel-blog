@@ -25,6 +25,7 @@ Route::get('/posts',[PostController::class, 'index'])->middleware('auth:sanctum'
 
 Route::get('/posts/{post}',[PostController::class, 'show']);
 
+Route::post('posts',[PostController::class,'store'])->name('posts.store')->middleware('auth:sanctum');
 
 
 
@@ -48,3 +49,6 @@ Route::post('/sanctum/token', function (Request $request) {
 
     return $user->createToken($request->device_name)->plainTextToken;
 });
+
+
+
