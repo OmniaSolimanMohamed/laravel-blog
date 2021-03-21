@@ -13,7 +13,10 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        // $posts = Post::all();
+        // Using Eager loading
+        $posts = Post::with('user')->get();
+
         $pages =Post::paginate(3);
         // dd($posts);
         // $posts = [
